@@ -92,3 +92,18 @@ variable "autoscale_max_capacity" {
   description = "(Optional) Autoscaling capacity unit cap for Application Gateway"
   type        = number
 }
+
+variable "vnet_rg_name" {
+  type        = string
+  description = "Resource group name that contains the VNET"
+}
+
+variable "vnet_name" {
+  type        = string
+  description = "The VNET name that contains the subnet"
+}
+
+variable "subnet_name" {
+  type        = string
+  description = "The subnet name for the AGW"
+}
