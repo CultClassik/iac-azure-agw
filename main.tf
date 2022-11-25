@@ -40,13 +40,14 @@ module "application_gateway" {
   common_tags                 = local.tags
   resource_group              = azurerm_resource_group.agw
   backend_ca_ssl_certificates = var.backend_ca_ssl_certificates
-  private_ip_address          = try(each.value.lb_private_ip_address, null)
-  subnet_id                   = data.azurerm_subnet.agw_frontend.id
-  zones                       = var.zones
-  environment                 = var.environment
-  frontend_ports              = var.frontend_ports
-  agw_configs                 = var.agw_configs
-  identity_ids                = [module.keyvault.key_vault_identity.object_id]
+  # if var.frontend_private_ip_address is not specified, use address 2 as 0 and 1 are not useable for hosts
+  private_ip_address = try(var.frontend_private_ip_address, cidrhost(data.azurerm_subnet.agw_frontend.address_prefixes[0]), 2)
+  subnet_id          = data.azurerm_subnet.agw_frontend.id
+  zones              = var.zones
+  environment        = var.environment
+  frontend_ports     = var.frontend_ports
+  agw_configs        = var.agw_configs
+  identity_ids       = [module.keyvault.key_vault_identity.object_id]
   # sku_capacity                 = var.lb_sku_capacity
 
   ### Probably want to remove this if it doesn't add any value

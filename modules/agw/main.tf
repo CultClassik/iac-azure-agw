@@ -1,5 +1,5 @@
 locals {
-  frontend_ip_configuration_name = "${var.resource_name_prefix}-vault-public"
+  frontend_ip_configuration_name = "${var.resource_name_prefix}-public"
 }
 
 # -----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ resource "azurerm_application_gateway" "agw" {
   # Unused (but mandatory) public IP config
   # https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-faq#how-do-i-use-application-gateway-v2-with-only-private-frontend-ip-address
   frontend_ip_configuration {
-    name                 = "${var.resource_name_prefix}-vault-public"
+    name                 = "${var.resource_name_prefix}-public"
     public_ip_address_id = azurerm_public_ip.vault_lb.id
   }
 

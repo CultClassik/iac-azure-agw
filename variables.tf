@@ -108,3 +108,8 @@ variable "subnet_name" {
   type        = string
   description = "The subnet name for the AGW"
 }
+
+variable "frontend_private_ip_address" {
+  type        = string
+  description = "(Optional) the private IP to use for the AGW frontend"
+}
