@@ -6,7 +6,7 @@ acme_email_address = "devops@verituity.com"
 ssl_certificates = {
   vault_nonp = {
     name             = "vault"
-    dns_zone_rg_name = "common"
+    dns_zone_rg_name = "dns-rg-nonprod"
     dns_zone_name    = "nonprod.verituityplatform.com"
   }
 
@@ -22,10 +22,10 @@ keyvault_readers = {
   devops = "8f2fccad-59de-4699-8e72-33adea4bcc8b"
 }
 
-backend_ca_ssl_certificates = {
+trusted_root_certificates = {
   vault_nonp = {
-    name                = "vault-backend"
-    key_vault_secret_id = "https://hcv32517a6290de83.vault.azure.net/secrets/hcv-vault-root-ca-pem/27ee3761f56d424ba56436cd9a64771f" # private ca certificate created in iac-azure-vault-cluster-components
+    name         = "hcv-vault-root-ca-pem" # private ca certificate created in iac-azure-vault-cluster-components
+    key_vault_id = "/subscriptions/a75c42cc-a976-4b30-95c6-aba1c6886cba/resourceGroups/hcv-rg-nonprod-eastus2/providers/Microsoft.KeyVault/vaults/hcv32517a6290de83"
   }
 }
 
@@ -35,9 +35,9 @@ frontend_ports = {
 }
 
 autoscale_max_capacity = 2
-vnet_rg_name           = "mgmt-rg-dev-eastus2"
-vnet_name              = "mgmt-vnet-hub-dev-eastus2"
-subnet_name            = "mgmt-snet-agw-dev-eastus2"
+vnet_rg_name           = "nonp-rg-dev-eastus2"
+vnet_name              = "nonp-vnet-hub-dev-eastus2"
+subnet_name            = "nonp-snet-agw-dev-eastus2"
 
 # identity_ids = [
 #   "0695475c-4f73-4884-ab68-7c01a4245876", # hcv-identity-nonprod-vault-lb
@@ -55,12 +55,16 @@ agw_configs = {
 
     backend = {
       port                           = 8200
-      trusted_root_certificate_names = ["vault-backend"] #name(s) of certs from var.backend_ca_ssl_certificates
+      trusted_root_certificate_names = ["hcv-vault-root-ca-pem"] #name(s) of certs from var.trusted_root_certificates
       host_name                      = "vault.nonprod.verituityplatform.com"
-      health_check_path              = "/v1/sys/health?activecode=200&standbycode=200&sealedcode=200&uninitcode=200"
+    }
+
+    probe = {
+      health_check_path = "/v1/sys/health?activecode=200&standbycode=200&sealedcode=200&uninitcode=200"
     }
 
     http_listener = {
+      host_names           = ["vault.nonprod.verituityplatform.com"]
       frontend_port_name   = "vault" # from var.frontend_ports
       ssl_certificate_name = "vault" # name of the acme certificate in keyvault, defined in var.ssl_certificates
     }

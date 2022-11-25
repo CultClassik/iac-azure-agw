@@ -11,14 +11,14 @@ output "key_vault_id" {
 output "ssl_secrets" {
   description = "The keyvault secret IDs for the SSL certificate"
   value = {
-    for k, v in azurerm_key_vault_certificate.ssl : k => {
-      common_name     = v.common_name
-      certificate_p12 = v.certificate_p12
+    for k, v in var.ssl_certificates : k => {
+      common_name = v.common_name
+      secret_id   = azurerm_key_vault_certificate.ssl[k].secret_id
     }
   }
 }
 
 output "key_vault_identity" {
   description = "The identity created for the AGW to access the key vault"
-  value       = azurerm_user_assigned_identity.agw
+  value       = var.user_supplied_agw_identity_id == null ? azurerm_user_assigned_identity.agw[0] : null
 }
