@@ -57,7 +57,7 @@ module "application_gateway" {
   environment        = var.environment
   frontend_ports     = var.frontend_ports
   agw_configs        = var.agw_configs
-  identity_ids       = [module.keyvault.key_vault_identity.client_id]
+  identity_ids       = [module.keyvault.key_vault_identity.id]
   # sku_capacity                 = var.lb_sku_capacity
 
   ### Probably want to remove this if it doesn't add any value
