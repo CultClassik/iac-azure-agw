@@ -4,6 +4,31 @@
 * Creates one or more http listeneder, front and and backend for the AGW.
 * Only two environments - production and nonprod.
 
+## Local use
+```bash
+export ARM_CLIENT_SECRET="xyz123"
+# create file secrets/secrets.tfvars
+cat <<EOF | ./secrets/secrets.env
+ARM_CLIENT_SECRET = "${ARM_CLIENT_SECRET}"
+EOF
+
+# create file secrets/secrets.tfvars
+cat <<EOF | ./secrets/secrets.tfvars
+acme_azure_client_secret = "${ARM_CLIENT_SECRET}"
+EOF
+
+set -o allexport &&\
+source variables/local.env &&\
+set +o allexport
+
+source variables/local.env
+source secrets/secrets.env
+
+terraform init
+
+terraform plan -var-file=variables/nonprod.tfvars -var-file=secrets/secrets.tfvars
+
+```
 
 ## TODO
 * Populate "zones" param to agw module
@@ -40,8 +65,10 @@
 | Name | Type |
 |------|------|
 | [acme_registration.reg](https://registry.terraform.io/providers/vancluever/acme/latest/docs/resources/registration) | resource |
+| [azurerm_dns_a_record.agw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/dns_a_record) | resource |
 | [azurerm_resource_group.agw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [tls_private_key.acme_reg](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
+| [azurerm_key_vault_secret.trusted_root_certificates](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_subnet.agw_frontend](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subnet) | data source |
 
 ## Inputs
@@ -56,11 +83,12 @@
 | <a name="input_backend_ca_ssl_certificates"></a> [backend\_ca\_ssl\_certificates](#input\_backend\_ca\_ssl\_certificates) | (Optional) Map of PEM certs of Certificate Authorities to use when verifying health probe SSL traffic.<br>Format: name => key\_vault\_secret\_id<br>Ex:<br>{<br>  vault\_nonp = {<br>    name = "vault"<br>    key\_vault\_secret\_id = <id of secret in keyvault><br>  }<br>} | `any` | `{}` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The name of the environment, FULL name, i.e. production, development etc | `string` | n/a | yes |
 | <a name="input_frontend_ports"></a> [frontend\_ports](#input\_frontend\_ports) | Map of frontend ports to configure.<br>Ex:<br>frontend\_ports = {<br>  vault = 8200,<br>  https = 443,<br>} | `map(string)` | n/a | yes |
-| <a name="input_frontend_private_ip_address"></a> [frontend\_private\_ip\_address](#input\_frontend\_private\_ip\_address) | (Optional) the private IP to use for the AGW frontend | `string` | n/a | yes |
+| <a name="input_frontend_private_ip_address"></a> [frontend\_private\_ip\_address](#input\_frontend\_private\_ip\_address) | (Optional) the private IP to use for the AGW frontend | `string` | `null` | no |
 | <a name="input_keyvault_readers"></a> [keyvault\_readers](#input\_keyvault\_readers) | Map of objects IDs to grant read access on certificates and secrets for.<br>Ex:<br>{ devops = "8f2fccad-59de-4699-8e72-33adea4bcc8b" } | `map(string)` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | Location for resources that require it | `string` | n/a | yes |
 | <a name="input_ssl_certificates"></a> [ssl\_certificates](#input\_ssl\_certificates) | (Optional) Map of SSL certs for frontend, stored in AKV. name => key\_vault\_secret\_id<br>The identity assigned to the gateway must have rights to read the secret(s).<br>Format: name => key\_vault\_secret\_id<br>Ex:<br>{<br>  vault\_nonp = {<br>    name = "vault"<br>    key\_vault\_secret\_id = <id of secret in keyvault><br>  }<br>} | `any` | `{}` | no |
 | <a name="input_subnet_name"></a> [subnet\_name](#input\_subnet\_name) | The subnet name for the AGW | `string` | n/a | yes |
+| <a name="input_trusted_root_certificates"></a> [trusted\_root\_certificates](#input\_trusted\_root\_certificates) | (Optional) Map of PEM certs of Certificate Authorities to use when verifying health probe SSL traffic.<br>Format: name => key\_vault\_secret\_id<br>Ex:<br>{<br>  vault\_nonp = {<br>    name = "vault"<br>    key\_vault\_secret\_id = <id of secret in keyvault><br>  }<br>} | `any` | `{}` | no |
 | <a name="input_vnet_name"></a> [vnet\_name](#input\_vnet\_name) | The VNET name that contains the subnet | `string` | n/a | yes |
 | <a name="input_vnet_rg_name"></a> [vnet\_rg\_name](#input\_vnet\_rg\_name) | Resource group name that contains the VNET | `string` | n/a | yes |
 | <a name="input_zones"></a> [zones](#input\_zones) | Azure availability zones in which to deploy the Application Gateway | `list(string)` | `null` | no |

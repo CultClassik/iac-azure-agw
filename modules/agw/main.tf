@@ -53,8 +53,8 @@ resource "azurerm_application_gateway" "agw" {
   dynamic "frontend_port" {
     for_each = var.frontend_ports
     content {
-      name = each.key
-      port = each.value
+      name = frontend_port.key
+      port = frontend_port.value
     }
   }
 
@@ -79,7 +79,7 @@ resource "azurerm_application_gateway" "agw" {
   dynamic "backend_address_pool" {
     for_each = var.agw_configs
     content {
-      name = "${each.key}-backend-pool"
+      name = "${backend_address_pool.key}-backend-pool"
     }
   }
 
@@ -97,15 +97,14 @@ resource "azurerm_application_gateway" "agw" {
   dynamic "backend_http_settings" {
     for_each = var.agw_configs
     content {
-      cookie_based_affinity = try(each.value.backend.cookie_based_affinity, "Disabled")
-      host_name             = each.value.backend.host_name
-      name                  = "${each.key}-${var.environment}"
-      port                  = each.value.backend.port
-      probe_name            = "${each.key}-${var.environment}"
-      protocol              = try(each.value.protocol, each.value.backend.protocol, "Https")
-      request_timeout       = try(each.value.request_timeout, 60)
-      # NEEDS TO BE FINALIZED
-      trusted_root_certificate_names = var.backend_ca_ssl_certificates == null ? null : [local.backend_trusted_cert_name]
+      cookie_based_affinity          = try(backend_http_settings.value.backend.cookie_based_affinity, "Disabled")
+      host_name                      = backend_http_settings.value.backend.host_name
+      name                           = "${backend_http_settings.key}-${var.environment}"
+      port                           = backend_http_settings.value.backend.port
+      probe_name                     = "${backend_http_settings.key}-${var.environment}"
+      protocol                       = try(backend_http_settings.value.protocol, backend_http_settings.value.backend.protocol, "Https")
+      request_timeout                = try(backend_http_settings.value.request_timeout, 60)
+      trusted_root_certificate_names = try(backend_http_settings.value.backend.trusted_root_certificate_names, [])
     }
   }
 
@@ -122,10 +121,10 @@ resource "azurerm_application_gateway" "agw" {
     for_each = var.agw_configs
     content {
       frontend_ip_configuration_name = local.frontend_ip_configuration_name
-      frontend_port_name             = each.value.http_listener.frontend_port_name
-      name                           = each.key
-      protocol                       = try(each.value.protocol, each.value.http_listener.protocol, "Https")
-      ssl_certificate_name           = each.value.http_listener.ssl_certificate_name
+      frontend_port_name             = http_listener.value.http_listener.frontend_port_name
+      name                           = http_listener.key
+      protocol                       = try(http_listener.value.protocol, http_listener.value.http_listener.protocol, "Https")
+      ssl_certificate_name           = http_listener.value.http_listener.ssl_certificate_name
     }
   }
 
@@ -142,11 +141,11 @@ resource "azurerm_application_gateway" "agw" {
   dynamic "probe" {
     for_each = var.agw_configs
     content {
-      host                = each.value.backend.host_name
-      interval            = try(each.value.probe.interval, 30)
-      name                = each.key
-      path                = each.backend.health_check_path
-      protocol            = try(each.value.protocol, each.value.backend.protocol, "Https")
+      host                = probe.value.backend.host_name
+      interval            = try(probe.value.probe.interval, 30)
+      name                = probe.key
+      path                = probe.value.probe.health_check_path
+      protocol            = try(probe.value.probe.protocol, probe.value.backend.protocol, "Https")
       timeout             = 3
       unhealthy_threshold = 3
     }
@@ -164,10 +163,10 @@ resource "azurerm_application_gateway" "agw" {
   dynamic "request_routing_rule" {
     for_each = var.agw_configs
     content {
-      backend_address_pool_name  = "${each.key}-backend-pool"
-      backend_http_settings_name = "${each.key}-${var.environment}"
-      http_listener_name         = each.key
-      name                       = each.key
+      backend_address_pool_name  = "${request_routing_rule.key}-backend-pool"
+      backend_http_settings_name = "${request_routing_rule.key}-${var.environment}"
+      http_listener_name         = request_routing_rule.key
+      name                       = request_routing_rule.key
       rule_type                  = "Basic"
       priority                   = 1000
     }
@@ -181,17 +180,17 @@ resource "azurerm_application_gateway" "agw" {
   dynamic "ssl_certificate" {
     for_each = var.ssl_certificates
     content {
-      name                = each.key
-      key_vault_secret_id = each.value
+      name                = ssl_certificate.key
+      key_vault_secret_id = ssl_certificate.value
     }
   }
 
   dynamic "trusted_root_certificate" {
     # for_each = var.backend_ca_ssl_certificates == null ? [0] : [1]
-    for_each = var.backend_ca_ssl_certificates
+    for_each = var.trusted_root_certificates
     content {
-      data = each.value
-      name = each.key
+      data = trusted_root_certificate.value.certificate_pem
+      name = trusted_root_certificate.value.name
     }
   }
 }

@@ -95,7 +95,7 @@ frontend_ports = {
 EOF
 }
 
-variable "backend_ca_ssl_certificates" {
+variable "trusted_root_certificates" {
   default     = {}
   type        = any
   description = <<EOF
@@ -105,7 +105,7 @@ Ex:
 {
   vault_nonp = {
     name = "vault"
-    key_vault_secret_id = <id of secret in keyvault>
+    certificate_pem = "<...>"
   }
 }
 EOF

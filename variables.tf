@@ -110,6 +110,23 @@ variable "subnet_name" {
 }
 
 variable "frontend_private_ip_address" {
+  default     = null
   type        = string
   description = "(Optional) the private IP to use for the AGW frontend"
+}
+
+variable "trusted_root_certificates" {
+  default     = {}
+  type        = any
+  description = <<EOF
+(Optional) Map of PEM certs of Certificate Authorities to use when verifying health probe SSL traffic.
+Format: name => key_vault_secret_id
+Ex:
+{
+  vault_nonp = {
+    name = "vault"
+    key_vault_secret_id = <id of secret in keyvault>
+  }
+}
+EOF
 }

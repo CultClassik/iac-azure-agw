@@ -1,3 +1,9 @@
+
+variable "environment" {
+  type        = string
+  description = "The name of the environment, FULL name, i.e. production, development etc"
+}
+
 variable "common_tags" {
   default     = {}
   description = "(Optional) Map of common tags for all taggable resources"
@@ -55,9 +61,4 @@ Ex:
   }
 }
 EOF
-}
-
-variable "environment" {
-  type        = string
-  description = "The name of the environment, FULL name, i.e. production, development etc"
 }
