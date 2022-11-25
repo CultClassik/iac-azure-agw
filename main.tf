@@ -65,7 +65,8 @@ module "application_gateway" {
   ### Probably want to remove this if it doesn't add any value
   resource_name_prefix = "agw"
   depends_on = [
-    azurerm_key_vault_access_policy.external
+    azurerm_key_vault_access_policy.external,
+    module.keyvault,
   ]
 }
 
