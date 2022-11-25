@@ -16,7 +16,7 @@ ssl_certificates = {
 # Config variables (global)
 # -----------------------------------------------------------------------------
 environment = "nonprod"
-location    = "eastus2"
+location    = "eastus"
 
 keyvault_readers = {
   devops = "8f2fccad-59de-4699-8e72-33adea4bcc8b"
@@ -25,7 +25,7 @@ keyvault_readers = {
 trusted_root_certificates = {
   vault_nonp = {
     name         = "hcv-vault-root-ca-pem" # private ca certificate created in iac-azure-vault-cluster-components
-    key_vault_id = "/subscriptions/a75c42cc-a976-4b30-95c6-aba1c6886cba/resourceGroups/hcv-rg-nonprod-eastus2/providers/Microsoft.KeyVault/vaults/hcv32517a6290de83"
+    key_vault_id = "/subscriptions/3810f594-f91b-404a-b6eb-ebf9b9e4f62c/resourceGroups/hcv-rg-nonprod-eastus/providers/Microsoft.KeyVault/vaults/hcv743b85f99bc509"
   }
 }
 
