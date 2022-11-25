@@ -41,6 +41,7 @@ terraform_plan:
     - if: $CI_PIPELINE_SOURCE == 'web'
   variables:
     TF_VAR_az_sub_id: $ARM_SUBSCRIPTION_ID_VTY_NONPROD
+    TF_VAR_acme_azure_client_secret: $ARM_CLIENT_SECRET
     TF_VARS_FILE: nonprod
     TF_HTTP_ADDRESS: https://gitlab.com/api/v4/projects/41282440/terraform/state/development
     TF_HTTP_LOCK_ADDRESS: https://gitlab.com/api/v4/projects/41282440/terraform/state/development/lock
@@ -60,6 +61,7 @@ terraform_apply:
     - if: $CI_PIPELINE_SOURCE == 'web'
   variables:
     TF_VAR_az_sub_id: $ARM_SUBSCRIPTION_ID_VTY_NONPROD
+    TF_VAR_acme_azure_client_secret: $ARM_CLIENT_SECRET
     TF_VARS_FILE: nonprod
     TF_HTTP_ADDRESS: https://gitlab.com/api/v4/projects/41282440/terraform/state/development
     TF_HTTP_LOCK_ADDRESS: https://gitlab.com/api/v4/projects/41282440/terraform/state/development/lock
