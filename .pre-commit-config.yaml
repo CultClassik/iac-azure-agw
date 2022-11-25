@@ -32,6 +32,7 @@ repos:
       args: ["markdown", "--output-file", "README.md", "."]
     - id: terraform-docs-system
       args: ["markdown", "--output-file", "README.md", "./modules/agw"]
-    # - id: terraform-docs-system
-    #   args: ["markdown", "--output-file", "README.md", "./modules/agw_frontend_cert"]
-
+    - id: terraform-docs-system
+      args: ["markdown", "--output-file", "README.md", "./modules/agw_frontend_cert"]
+    - id: terraform-docs-system
+      args: ["markdown", "--output-file", "README.md", "./modules/keyvault"]
