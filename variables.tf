@@ -71,6 +71,7 @@ EOF
 variable "acme_azure_client_secret" {
   description = "For the ACME provider"
   type        = string
+  sensitive   = true
 }
 
 variable "acme_email_address" {
