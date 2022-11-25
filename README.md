@@ -1,8 +1,14 @@
 # iac-azure-agw
 * Manages an Azure Application Gateway.
-* Creates one or more Lets Encrypt certificates for the AGW.
-* Creates one or more http listeneder, front and and backend for the AGW.
-* Only two environments - production and nonprod.
+
+## What this configuration does
+* Creates an Azure Application Gateway
+* Creates a Lets Encrypt registration
+* Creates Lets Encrypt ceritificates for the AGW
+* Creates DNS records for the AGW public IP
+* Creates one or more http listeneder, front and and backend for the AGW
+* Only two environments - production and nonprod
+  * All non production environments will be serviced by the nonprod AGW
 
 ## Local use
 ```bash

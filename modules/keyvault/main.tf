@@ -22,7 +22,7 @@ resource "azurerm_key_vault" "agw" {
 }
 
 # -----------------------------------------------------------------------------
-# Store the certificates in the key vault.
+# Store the front-end certificates in the key vault.
 # -----------------------------------------------------------------------------
 resource "azurerm_key_vault_certificate" "ssl" {
   for_each     = var.ssl_certificates

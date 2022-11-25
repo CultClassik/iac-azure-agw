@@ -5,7 +5,7 @@ locals {
 # -----------------------------------------------------------------------------
 # Public IP for AGW front end
 # -----------------------------------------------------------------------------
-resource "azurerm_public_ip" "vault_lb" {
+resource "azurerm_public_ip" "agw" {
   allocation_method   = "Static"
   location            = var.resource_group.location
   name                = "agw-pip-${var.environment}"
@@ -46,10 +46,6 @@ resource "azurerm_application_gateway" "agw" {
     type         = "UserAssigned"
   }
 
-  # frontend_port {
-  #   name = local.frontend_port_name
-  #   port = 8200
-  # }
   dynamic "frontend_port" {
     for_each = var.frontend_ports
     content {
@@ -62,19 +58,8 @@ resource "azurerm_application_gateway" "agw" {
   # https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-faq#how-do-i-use-application-gateway-v2-with-only-private-frontend-ip-address
   frontend_ip_configuration {
     name                 = "${var.resource_name_prefix}-public"
-    public_ip_address_id = azurerm_public_ip.vault_lb.id
+    public_ip_address_id = azurerm_public_ip.agw.id
   }
-
-  # frontend_ip_configuration {
-  #   name                          = local.frontend_ip_configuration_name
-  #   private_ip_address            = var.private_ip_address
-  #   private_ip_address_allocation = var.private_ip_address == null ? "Dynamic" : "Static"
-  #   subnet_id                     = var.subnet_id
-  # }
-
-  # backend_address_pool {
-  #   name = local.backend_address_pool_name
-  # }
 
   dynamic "backend_address_pool" {
     for_each = var.agw_configs
@@ -82,17 +67,6 @@ resource "azurerm_application_gateway" "agw" {
       name = "${backend_address_pool.key}-backend-pool"
     }
   }
-
-  # backend_http_settings {
-  #   cookie_based_affinity          = "Disabled"
-  #   host_name                      = var.backend_server_name
-  #   name                           = local.backend_http_setting_name
-  #   port                           = 8200
-  #   probe_name                     = local.probe_name
-  #   protocol                       = "Https"
-  #   request_timeout                = 60
-  #   trusted_root_certificate_names = var.backend_ca_ssl_certificates == null ? null : [local.backend_trusted_cert_name]
-  # }
 
   dynamic "backend_http_settings" {
     for_each = var.agw_configs
@@ -108,15 +82,6 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
-  # http_listener {
-  #   # frontend_ip_configuration_name = local.frontend_ip_configuration_name
-  #   frontend_ip_configuration_name = local.frontend_ip_configuration_name
-  #   frontend_port_name             = local.frontend_port_name
-  #   name                           = local.http_listener_name
-  #   protocol                       = "Https"
-  #   ssl_certificate_name           = local.ssl_cert_name
-  # }
-
   dynamic "http_listener" {
     for_each = var.agw_configs
     content {
@@ -127,16 +92,6 @@ resource "azurerm_application_gateway" "agw" {
       ssl_certificate_name           = http_listener.value.http_listener.ssl_certificate_name
     }
   }
-
-  # probe {
-  #   host                = var.backend_server_name
-  #   interval            = 30
-  #   name                = local.probe_name
-  #   path                = var.health_check_path
-  #   protocol            = "Https"
-  #   timeout             = 3
-  #   unhealthy_threshold = 3
-  # }
 
   dynamic "probe" {
     for_each = var.agw_configs
@@ -151,15 +106,6 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
-  # request_routing_rule {
-  #   backend_address_pool_name  = local.backend_address_pool_name
-  #   backend_http_settings_name = local.backend_http_setting_name
-  #   http_listener_name         = local.http_listener_name
-  #   name                       = "${var.resource_name_prefix}-vault"
-  #   rule_type                  = "Basic"
-  #   priority                   = 1000
-  # }
-
   dynamic "request_routing_rule" {
     for_each = var.agw_configs
     content {
@@ -172,11 +118,6 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
-  # ssl_certificate {
-  #   key_vault_secret_id = var.key_vault_ssl_cert_secret_id
-  #   name                = local.ssl_cert_name
-  # }
-
   dynamic "ssl_certificate" {
     for_each = var.ssl_certificates
     content {
@@ -186,7 +127,6 @@ resource "azurerm_application_gateway" "agw" {
   }
 
   dynamic "trusted_root_certificate" {
-    # for_each = var.backend_ca_ssl_certificates == null ? [0] : [1]
     for_each = var.trusted_root_certificates
     content {
       data = trusted_root_certificate.value.certificate_pem
