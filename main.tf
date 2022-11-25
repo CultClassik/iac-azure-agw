@@ -95,7 +95,7 @@ resource "azurerm_key_vault_access_policy" "external" {
   for_each = { for id in local.external_key_vaults : id => null }
 
   key_vault_id = each.key
-  object_id    = module.keyvault.key_vault_identity.object_id
+  object_id    = module.keyvault.key_vault_identity.principal_id
   tenant_id    = data.azurerm_client_config.current.tenant_id
 
   secret_permissions = [
