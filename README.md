@@ -25,9 +25,8 @@ EOF
 
 set -o allexport &&\
 source variables/local.env &&\
-set +o allexport
-
-source variables/local.env
+set +o allexport &&\
+source variables/local.env &&\
 source secrets/secrets.env
 
 terraform init
@@ -72,8 +71,10 @@ terraform plan -var-file=variables/nonprod.tfvars -var-file=secrets/secrets.tfva
 |------|------|
 | [acme_registration.reg](https://registry.terraform.io/providers/vancluever/acme/latest/docs/resources/registration) | resource |
 | [azurerm_dns_a_record.agw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/dns_a_record) | resource |
+| [azurerm_key_vault_access_policy.external](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_access_policy) | resource |
 | [azurerm_resource_group.agw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [tls_private_key.acme_reg](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
+| [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
 | [azurerm_key_vault_secret.trusted_root_certificates](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_subnet.agw_frontend](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subnet) | data source |
 

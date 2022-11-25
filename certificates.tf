@@ -38,4 +38,5 @@ module "keyvault" {
   ssl_certificates = {
     for k, v in module.letsencrypt : k => v
   }
+
 }
