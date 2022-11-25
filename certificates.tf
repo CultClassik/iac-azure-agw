@@ -15,7 +15,7 @@ resource "acme_registration" "reg" {
 }
 
 # -----------------------------------------------------------------------------
-# Generatea Lets Encrypt SSL certificates and store in AKV
+# Generate Lets Encrypt SSL certificates and store in AKV
 # -----------------------------------------------------------------------------
 module "letsencrypt" {
   source                   = "./modules/agw_frontend_cert"
@@ -28,6 +28,9 @@ module "letsencrypt" {
   acme_azure_client_secret = var.acme_azure_client_secret
 }
 
+# -----------------------------------------------------------------------------
+# Create a key vault to store necessary secrets/certs for AGW
+# -----------------------------------------------------------------------------
 module "keyvault" {
   source               = "./modules/keyvault"
   common_tags          = local.tags
