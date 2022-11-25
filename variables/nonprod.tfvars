@@ -6,7 +6,7 @@ acme_email_address = "devops@verituity.com"
 ssl_certificates = {
   vault_nonp = {
     name             = "vault"
-    dns_zone_rg_name = "common"
+    dns_zone_rg_name = "dns-rg-nonprod"
     dns_zone_name    = "nonprod.verituityplatform.com"
   }
 
