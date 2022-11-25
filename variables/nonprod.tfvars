@@ -64,6 +64,7 @@ agw_configs = {
     }
 
     http_listener = {
+      host_names           = ["vault.nonprod.verituityplatform.com"]
       frontend_port_name   = "vault" # from var.frontend_ports
       ssl_certificate_name = "vault" # name of the acme certificate in keyvault, defined in var.ssl_certificates
     }
