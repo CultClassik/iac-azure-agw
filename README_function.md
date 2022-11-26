@@ -6,5 +6,5 @@
 * The backend_http_settings for each config can refer to any trusted_root_certificate by name.
 * The idenity running Terraform must have rights to read secrets in any key vault used here.
 
-Issues when using eastus2
+Issues when using eastus
 https://github.com/hashicorp/terraform-provider-azurerm/issues/11059

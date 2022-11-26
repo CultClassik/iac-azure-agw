@@ -13,7 +13,7 @@ locals {
   trusted_root_certificates = {
     vault_nonp = {
       name         = "hcv-vault-root-ca-pem" # private ca certificate created in iac-azure-vault-cluster-components
-      key_vault_id = "/subscriptions/a75c42cc-a976-4b30-95c6-aba1c6886cba/resourceGroups/hcv-rg-nonprod-eastus2/providers/Microsoft.KeyVault/vaults/hcv32517a6290de83"
+      key_vault_id = "/subscriptions/a75c42cc-a976-4b30-95c6-aba1c6886cba/resourceGroups/hcv-rg-nonprod-eastus/providers/Microsoft.KeyVault/vaults/hcv32517a6290de83"
     }
   }
 }
@@ -45,5 +45,5 @@ resource "azurerm_key_vault_access_policy" "external" {
 
 data "azurerm_key_vault" "vault" {
   name                = "hcv32517a6290de83"
-  resource_group_name = "hcv-rg-nonprod-eastus2"
+  resource_group_name = "hcv-rg-nonprod-eastus"
 }

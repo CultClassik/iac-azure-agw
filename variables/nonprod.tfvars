@@ -35,9 +35,9 @@ frontend_ports = {
 }
 
 autoscale_max_capacity = 2
-vnet_rg_name           = "nonp-rg-dev-eastus2"
-vnet_name              = "nonp-vnet-hub-dev-eastus2"
-subnet_name            = "nonp-snet-agw-dev-eastus2"
+vnet_rg_name           = "nonp-rg-dev-eastus"
+vnet_name              = "nonp-vnet-hub-dev-eastus"
+subnet_name            = "nonp-snet-agw-dev-eastus"
 
 # identity_ids = [
 #   "0695475c-4f73-4884-ab68-7c01a4245876", # hcv-identity-nonprod-vault-lb
