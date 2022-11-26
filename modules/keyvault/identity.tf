@@ -21,4 +21,8 @@ resource "azurerm_key_vault_access_policy" "load_balancer_msi" {
   secret_permissions = [
     "Get",
   ]
+
+  certificate_permissions = [
+    "Get",
+  ]
 }
