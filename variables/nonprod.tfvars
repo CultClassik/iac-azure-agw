@@ -17,6 +17,7 @@ ssl_certificates = {
 environment = "nonprod"
 location    = "eastus"
 
+# assign list/get rights to secrets and certificates
 keyvault_readers = {
   devops = "8f2fccad-59de-4699-8e72-33adea4bcc8b"
 }
@@ -34,9 +35,9 @@ frontend_ports = {
 }
 
 autoscale_max_capacity = 2
-vnet_rg_name           = "nonp-rg-dev-eastus"
-vnet_name              = "nonp-vnet-hub-dev-eastus"
-subnet_name            = "nonp-snet-agw-dev-eastus"
+vnet_rg_name           = "hub-rg-nop-eastus"
+vnet_name              = "hub-vnet-hub-nop-eastus"
+subnet_name            = "hub-snet-agw-nop-eastus"
 
 # identity_ids = [
 #   "0695475c-4f73-4884-ab68-7c01a4245876", # hcv-identity-nonprod-vault-lb
