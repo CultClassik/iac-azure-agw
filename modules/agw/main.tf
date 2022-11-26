@@ -87,7 +87,7 @@ resource "azurerm_application_gateway" "agw" {
     content {
       frontend_ip_configuration_name = local.frontend_ip_configuration_name
       frontend_port_name             = http_listener.value.http_listener.frontend_port_name
-      name                           = http_listener.key
+      name                           = "${http_listener.key}-${var.environment}"
       protocol                       = try(http_listener.value.protocol, http_listener.value.http_listener.protocol, "Https")
       ssl_certificate_name           = http_listener.value.http_listener.ssl_certificate_name
     }
@@ -98,7 +98,7 @@ resource "azurerm_application_gateway" "agw" {
     content {
       host                = probe.value.backend.host_name
       interval            = try(probe.value.probe.interval, 30)
-      name                = probe.key
+      name                = "${probe.key}-${var.environment}"
       path                = probe.value.probe.health_check_path
       protocol            = try(probe.value.probe.protocol, probe.value.backend.protocol, "Https")
       timeout             = 3
@@ -111,18 +111,10 @@ resource "azurerm_application_gateway" "agw" {
     content {
       backend_address_pool_name  = "${request_routing_rule.key}-backend-pool"
       backend_http_settings_name = "${request_routing_rule.key}-${var.environment}"
-      http_listener_name         = request_routing_rule.key
+      http_listener_name         = "${request_routing_rule.key}-${var.environment}"
       name                       = request_routing_rule.key
       rule_type                  = "Basic"
       priority                   = 1000
-    }
-  }
-
-  dynamic "ssl_certificate" {
-    for_each = var.ssl_certificates
-    content {
-      name                = ssl_certificate.key
-      key_vault_secret_id = ssl_certificate.value
     }
   }
 
@@ -133,4 +125,13 @@ resource "azurerm_application_gateway" "agw" {
       name = trusted_root_certificate.value.name
     }
   }
+
+  dynamic "ssl_certificate" {
+    for_each = var.ssl_certificates
+    content {
+      name                = ssl_certificate.value.common_name
+      key_vault_secret_id = ssl_certificate.value.key_vault_secret_id
+    }
+  }
+
 }

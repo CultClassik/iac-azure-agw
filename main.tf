@@ -64,6 +64,11 @@ module "application_gateway" {
 
   ### Probably want to remove this if it doesn't add any value
   resource_name_prefix = "agw"
+
+  ssl_certificates = module.keyvault.ssl_secrets
+
+  # msi for agw needs rights assignments to happen before agw can be created
+  # terraform may not reazlie this on it's own
   depends_on = [
     azurerm_key_vault_access_policy.external,
     module.keyvault,

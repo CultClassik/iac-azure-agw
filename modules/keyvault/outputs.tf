@@ -12,8 +12,8 @@ output "ssl_secrets" {
   description = "The keyvault secret IDs for the SSL certificate"
   value = {
     for k, v in var.ssl_certificates : k => {
-      common_name = v.common_name
-      secret_id   = azurerm_key_vault_certificate.ssl[k].secret_id
+      common_name         = v.common_name
+      key_vault_secret_id = azurerm_key_vault_certificate.ssl[k].secret_id
     }
   }
 }
