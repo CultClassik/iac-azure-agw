@@ -102,5 +102,7 @@ terraform plan -var-file=variables/nonprod.tfvars -var-file=secrets/secrets.tfva
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_backend_address_pools"></a> [backend\_address\_pools](#output\_backend\_address\_pools) | Entire AGW object |
 <!-- END_TF_DOCS -->

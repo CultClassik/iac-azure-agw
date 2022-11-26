@@ -46,6 +46,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_backend_address_pool_id"></a> [backend\_address\_pool\_id](#output\_backend\_address\_pool\_id) | n/a |
+| <a name="output_backend_address_pools"></a> [backend\_address\_pools](#output\_backend\_address\_pools) | n/a |
 | <a name="output_public_ip_id"></a> [public\_ip\_id](#output\_public\_ip\_id) | n/a |
 <!-- END_TF_DOCS -->
