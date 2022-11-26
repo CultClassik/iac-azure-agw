@@ -17,7 +17,7 @@ resource "azurerm_public_ip" "agw" {
 
 resource "azurerm_application_gateway" "agw" {
   location            = var.resource_group.location
-  name                = "${var.resource_name_prefix}-agw-${var.environment}"
+  name                = "agw-${var.environment}"
   resource_group_name = var.resource_group.name
   tags                = var.common_tags
   zones               = var.zones
@@ -54,7 +54,7 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
-  # Unused (but mandatory) public IP config
+  # mandatory public IP config
   # https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-faq#how-do-i-use-application-gateway-v2-with-only-private-frontend-ip-address
   frontend_ip_configuration {
     name                 = "${var.resource_name_prefix}-public"

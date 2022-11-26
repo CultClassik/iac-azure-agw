@@ -9,7 +9,6 @@ ssl_certificates = {
     dns_zone_rg_name = "dns-rg-nonprod"
     dns_zone_name    = "nonprod.verituityplatform.com"
   }
-
 }
 
 # -----------------------------------------------------------------------------
