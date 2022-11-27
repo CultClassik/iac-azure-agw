@@ -9,6 +9,8 @@
 * Creates one or more http listeneder, front and and backend for the AGW
 * Only two environments - production and nonprod
   * All non production environments will be serviced by the nonprod AGW
+* All frontend and backend certs are stored in a dedicated keyvault
+  * Certs are added to the AGW by their key vault secret id
 
 ## Local use
 ```bash

@@ -48,8 +48,9 @@ module "application_gateway" {
   resource_group = azurerm_resource_group.agw
   trusted_root_certificates = {
     for k, v in data.azurerm_key_vault_secret.trusted_root_certificates : k => {
-      name            = v.name,
-      certificate_pem = v.value
+      name = v.name,
+      # certificate_pem = v.value
+      key_vault_secret_id = v.versionless_id
     }
   }
   # if var.frontend_private_ip_address is not specified, use address 2 as 0 and 1 are not useable for hosts

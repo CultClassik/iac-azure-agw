@@ -24,7 +24,8 @@ keyvault_readers = {
 
 trusted_root_certificates = {
   vault_nonp = {
-    name         = "hcv-vault-root-ca-pem" # private ca certificate created in iac-azure-vault-cluster-components
+    name = "hcv-vault-root-ca-pem" # private ca certificate created in iac-azure-vault-cluster-components
+    # key_vault_secret_id =
     key_vault_id = "/subscriptions/3810f594-f91b-404a-b6eb-ebf9b9e4f62c/resourceGroups/hcv-rg-nonprod-eastus/providers/Microsoft.KeyVault/vaults/hcv743b85f99bc509"
   }
 }

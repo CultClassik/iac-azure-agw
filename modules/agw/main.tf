@@ -121,8 +121,9 @@ resource "azurerm_application_gateway" "agw" {
   dynamic "trusted_root_certificate" {
     for_each = var.trusted_root_certificates
     content {
-      data = trusted_root_certificate.value.certificate_pem
-      name = trusted_root_certificate.value.name
+      # data = trusted_root_certificate.value.certificate_pem
+      name                = trusted_root_certificate.value.name
+      key_vault_secret_id = trusted_root_certificate.value.key_vault_secret_id
     }
   }
 
