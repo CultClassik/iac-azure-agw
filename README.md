@@ -10,7 +10,8 @@
 * Only two environments - production and nonprod
   * All non production environments will be serviced by the nonprod AGW
 * All frontend and backend certs are stored in a dedicated keyvault
-  * Certs are added to the AGW by their key vault secret id
+  * ~~Certs are added to the AGW by their key vault secret id~~
+  * Using the secret id always gives an error about improper format. Adding the PEM straight to the AGW after fetching it from the external key vault
 
 ## Local use
 ```bash
@@ -77,6 +78,7 @@ terraform plan -var-file=variables/nonprod.tfvars -var-file=secrets/secrets.tfva
 | [azurerm_resource_group.agw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [tls_private_key.acme_reg](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
+| [azurerm_key_vault_secret.trusted_root_certificates](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_subnet.agw_frontend](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subnet) | data source |
 
 ## Inputs
