@@ -3,6 +3,7 @@
 # -----------------------------------------------------------------------------
 acme_email_address = "devops@verituity.com"
 
+# Generate Lets Encrypt certificates and store in AGW key vault
 ssl_certificates = {
   vault_nonp = {
     name             = "vault"
@@ -10,7 +11,6 @@ ssl_certificates = {
     dns_zone_name    = "nonprod.verituityplatform.com"
   }
 }
-
 # -----------------------------------------------------------------------------
 # Config variables (global)
 # -----------------------------------------------------------------------------
@@ -24,9 +24,9 @@ keyvault_readers = {
 
 trusted_root_certificates = {
   vault_nonp = {
-    name = "hcv-vault-root-ca-pem" # private ca certificate created in iac-azure-vault-cluster-components
-    # key_vault_secret_id =
-    key_vault_id = "/subscriptions/3810f594-f91b-404a-b6eb-ebf9b9e4f62c/resourceGroups/hcv-rg-nonprod-eastus/providers/Microsoft.KeyVault/vaults/hcv743b85f99bc509"
+    name                = "hcv-vault-root-ca-pem" # private ca certificate created in iac-azure-vault-cluster-components
+    key_vault_secret_id = "https://hcv743b85f99bc509.vault.azure.net/secrets/hcv-vault-root-ca-pem"
+    key_vault_id        = "/subscriptions/3810f594-f91b-404a-b6eb-ebf9b9e4f62c/resourceGroups/hcv-rg-nonprod-eastus/providers/Microsoft.KeyVault/vaults/hcv743b85f99bc509"
   }
 }
 

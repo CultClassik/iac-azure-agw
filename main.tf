@@ -35,11 +35,11 @@ data "azurerm_subnet" "agw_frontend" {
   resource_group_name  = var.vnet_rg_name
 }
 
-data "azurerm_key_vault_secret" "trusted_root_certificates" {
-  for_each     = var.trusted_root_certificates
-  key_vault_id = each.value.key_vault_id
-  name         = each.value.name
-}
+# data "azurerm_key_vault_secret" "trusted_root_certificates" {
+#   for_each     = var.trusted_root_certificates
+#   key_vault_id = each.value.key_vault_id
+#   name         = each.value.name
+# }
 
 # https://learn.microsoft.com/en-us/azure/reliability/availability-zones-service-support
 module "application_gateway" {
@@ -47,10 +47,9 @@ module "application_gateway" {
   common_tags    = local.tags
   resource_group = azurerm_resource_group.agw
   trusted_root_certificates = {
-    for k, v in data.azurerm_key_vault_secret.trusted_root_certificates : k => {
-      name = v.name,
-      # certificate_pem = v.value
-      key_vault_secret_id = v.versionless_id
+    for k, v in var.trusted_root_certificates : k => {
+      name                = v.name
+      key_vault_secret_id = v.key_vault_secret_id
     }
   }
   # if var.frontend_private_ip_address is not specified, use address 2 as 0 and 1 are not useable for hosts
