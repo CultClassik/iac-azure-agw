@@ -18,7 +18,7 @@ plan:
     matrix:
       - TF_VARS_FILE: mgt_nonprod
         TF_WORKSPACE: $TF_VARS_FILE
-        TF_AZ_BACKEND: $az_backend_mgt_nonprod
+        TF_AZ_BACKEND: $az_backend_management_nonprod
         TF_VAR_acme_azure_client_secret: $ARM_CLIENT_SECRET
 
 # -----------------------------------------------------------------------------
@@ -30,5 +30,5 @@ apply:
     matrix:
       - TF_VARS_FILE: mgt_nonprod
         TF_WORKSPACE: $TF_VARS_FILE
-        TF_AZ_BACKEND: $az_backend_mgt_nonprod
+        TF_AZ_BACKEND: $az_backend_management_nonprod
         TF_VAR_acme_azure_client_secret: $ARM_CLIENT_SECRET
