@@ -1,4 +1,4 @@
-az_sub_id = "3810f594-f91b-404a-b6eb-ebf9b9e4f62c" # vty_nonprod
+az_sub_id = "a75c42cc-a976-4b30-95c6-aba1c6886cba" # management
 
 # -----------------------------------------------------------------------------
 # Lets Encrypt SSL certificate variables (global)
