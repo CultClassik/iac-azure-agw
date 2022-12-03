@@ -1,3 +1,5 @@
+az_sub_id = "3810f594-f91b-404a-b6eb-ebf9b9e4f62c" # vty_nonprod
+
 # -----------------------------------------------------------------------------
 # Lets Encrypt SSL certificate variables (global)
 # -----------------------------------------------------------------------------
@@ -15,7 +17,7 @@ ssl_certificates = {
 # Config variables (global)
 # -----------------------------------------------------------------------------
 environment = "nonprod"
-location    = "eastus"
+location    = "eastus2"
 
 # assign list/get rights to secrets and certificates
 keyvault_readers = {
@@ -36,9 +38,9 @@ frontend_ports = {
 }
 
 autoscale_max_capacity = 2
-vnet_rg_name           = "hub-rg-nop-eastus"
-vnet_name              = "hub-vnet-hub-nop-eastus"
-subnet_name            = "hub-snet-agw-nop-eastus"
+vnet_rg_name           = "mgmt-rg-nop-eastus2"
+vnet_name              = "mgmt-vnet-hub-nop-eastus2"
+subnet_name            = "mgmt-snet-agw-nop-eastus2"
 
 # identity_ids = [
 #   "0695475c-4f73-4884-ab68-7c01a4245876", # hcv-identity-nonprod-vault-lb
