@@ -15,7 +15,7 @@ locals {
 
   tags = {
     environment = local.environment
-    git_repo    = "https://gitlab.com/${var.git_repo}"
+    git_repo    = var.git_repo
     product     = "agw"
   }
 }
