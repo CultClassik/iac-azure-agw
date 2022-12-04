@@ -142,3 +142,8 @@ Ex:
 }
 EOF
 }
+
+variable "git_repo" {
+  type        = string
+  description = "The name of the repository that managese these resources."
+}

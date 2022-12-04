@@ -15,7 +15,7 @@ locals {
 
   tags = {
     environment = local.environment
-    git_repo    = "verituity/devops/azure-infrastructure/iac-azure-agw"
+    git_repo    = "https://gitlab.com/${var.git_repo}"
     product     = "agw"
   }
 }
