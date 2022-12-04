@@ -2,7 +2,7 @@ include:
   - project: 'verituity/devops/cicd-templates'
     file: '/infra/terraform-matrix.yml'
     # ref: v0.4-stable
-    ref: feature/backend-debug-output
+    ref: v0.4.1534
 
 variables:
   TF_CLI_VERSION: '1.3.5'
