@@ -12,12 +12,6 @@ variable "dns_zone_rg_name" {
   description = "THe resource group name which contains the DNS zone from dns_zone_name"
 }
 
-variable "acme_azure_client_secret" {
-  description = "For the ACME provider"
-  type        = string
-  sensitive   = true
-}
-
 variable "acme_email_address" {
   description = "Email address used for ACME registration (Lets Encrypt)"
   type        = string
@@ -37,4 +31,28 @@ variable "host_name" {
 variable "account_key_pem" {
   type        = string
   description = "The ACME registration key"
+}
+
+variable "azure_client_id" {
+  description = "For the ACME provider"
+  type        = string
+  sensitive   = true
+}
+
+variable "azure_client_secret" {
+  description = "For the ACME provider"
+  type        = string
+  sensitive   = true
+}
+
+variable "azure_subscription_id" {
+  description = "For the ACME provider"
+  type        = string
+  sensitive   = true
+}
+
+variable "azure_tenant_id" {
+  description = "For the ACME provider"
+  type        = string
+  sensitive   = true
 }

@@ -68,7 +68,19 @@ frontend_ports = {
 EOF
 }
 
-variable "acme_azure_client_secret" {
+variable "azure_client_id" {
+  description = "For the ACME provider"
+  type        = string
+  sensitive   = true
+}
+
+variable "azure_client_secret" {
+  description = "For the ACME provider"
+  type        = string
+  sensitive   = true
+}
+
+variable "azure_subscription_id" {
   description = "For the ACME provider"
   type        = string
   sensitive   = true

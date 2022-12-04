@@ -23,7 +23,7 @@ EOF
 
 # create file secrets/secrets.tfvars
 cat <<EOF | ./secrets/secrets.tfvars
-acme_azure_client_secret = "${ARM_CLIENT_SECRET}"
+azure_client_secret = "${ARM_CLIENT_SECRET}"
 EOF
 
 set -o allexport &&\
@@ -85,11 +85,13 @@ terraform plan -var-file=variables/nonprod.tfvars -var-file=secrets/secrets.tfva
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_acme_azure_client_secret"></a> [acme\_azure\_client\_secret](#input\_acme\_azure\_client\_secret) | For the ACME provider | `string` | n/a | yes |
 | <a name="input_acme_email_address"></a> [acme\_email\_address](#input\_acme\_email\_address) | Email address used for ACME registration (Lets Encrypt) | `string` | n/a | yes |
 | <a name="input_agw_configs"></a> [agw\_configs](#input\_agw\_configs) | Map of AGW configurations | `any` | n/a | yes |
 | <a name="input_autoscale_max_capacity"></a> [autoscale\_max\_capacity](#input\_autoscale\_max\_capacity) | (Optional) Autoscaling capacity unit cap for Application Gateway | `number` | `null` | no |
 | <a name="input_az_sub_id"></a> [az\_sub\_id](#input\_az\_sub\_id) | The Azure subscription ID to manage resources in | `string` | n/a | yes |
+| <a name="input_azure_client_id"></a> [azure\_client\_id](#input\_azure\_client\_id) | For the ACME provider | `string` | n/a | yes |
+| <a name="input_azure_client_secret"></a> [azure\_client\_secret](#input\_azure\_client\_secret) | For the ACME provider | `string` | n/a | yes |
+| <a name="input_azure_subscription_id"></a> [azure\_subscription\_id](#input\_azure\_subscription\_id) | For the ACME provider | `string` | n/a | yes |
 | <a name="input_backend_ca_ssl_certificates"></a> [backend\_ca\_ssl\_certificates](#input\_backend\_ca\_ssl\_certificates) | (Optional) Map of PEM certs of Certificate Authorities to use when verifying health probe SSL traffic.<br>Format: name => key\_vault\_secret\_id<br>Ex:<br>{<br>  vault\_nonp = {<br>    name = "vault"<br>    key\_vault\_secret\_id = <id of secret in keyvault><br>  }<br>} | `any` | `{}` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The name of the environment, FULL name, i.e. production, development etc | `string` | n/a | yes |
 | <a name="input_frontend_ports"></a> [frontend\_ports](#input\_frontend\_ports) | Map of frontend ports to configure.<br>Ex:<br>frontend\_ports = {<br>  vault = 8200,<br>  https = 443,<br>} | `map(string)` | n/a | yes |
