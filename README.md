@@ -58,6 +58,7 @@ terraform plan -var-file=variables/nonprod.tfvars -var-file=secrets/secrets.tfva
 |------|---------|
 | <a name="provider_acme"></a> [acme](#provider\_acme) | 2.11.1 |
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.33.0 |
+| <a name="provider_azurerm.dns"></a> [azurerm.dns](#provider\_azurerm.dns) | 3.33.0 |
 | <a name="provider_tls"></a> [tls](#provider\_tls) | 4.0.4 |
 
 ## Modules
