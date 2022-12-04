@@ -17,7 +17,7 @@ ssl_certificates = {
 # Config variables (global)
 # -----------------------------------------------------------------------------
 environment = "nonprod"
-location    = "eastus"
+location    = "eastus2"
 
 # assign list/get rights to secrets and certificates
 keyvault_readers = {
