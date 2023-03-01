@@ -1,10 +1,10 @@
 include:
-  - project: 'verituity/devops/cicd-templates'
+  - project: 'diehlabs/devops/cicd-templates'
     file: '/infra/terraform-matrix.yml'
     ref: v0.4-stable
 
 variables:
-  TF_CLI_VERSION: '1.3.5'
+  TF_CLI_VERSION: '1.3.9'
   GITLAB_TOKEN: $TERRAFORM_GITLAB_TOKEN
 
 # -----------------------------------------------------------------------------

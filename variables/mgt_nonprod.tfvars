@@ -3,14 +3,14 @@ az_sub_id = "a75c42cc-a976-4b30-95c6-aba1c6886cba" # management
 # -----------------------------------------------------------------------------
 # Lets Encrypt SSL certificate variables (global)
 # -----------------------------------------------------------------------------
-acme_email_address = "devops@verituity.com"
+acme_email_address = "devops@diehlabs.com"
 
 # Generate Lets Encrypt certificates and store in AGW key vault
 ssl_certificates = {
   vault_nonp = {
     name             = "vault"
     dns_zone_rg_name = "dns-rg-nonprod"
-    dns_zone_name    = "nonprod.verituityplatform.com"
+    dns_zone_name    = "nonprod.diehlabsplatform.com"
   }
 }
 # -----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ agw_configs = {
     backend = {
       port                           = 8200
       trusted_root_certificate_names = ["hcv-vault-root-ca-pem"] #name(s) of certs from var.trusted_root_certificates
-      host_name                      = "vault.nonprod.verituityplatform.com"
+      host_name                      = "vault.nonprod.diehlabsplatform.com"
     }
 
     probe = {
@@ -67,9 +67,9 @@ agw_configs = {
     }
 
     http_listener = {
-      host_names           = ["vault.nonprod.verituityplatform.com"]
-      frontend_port_name   = "vault"                               # from var.frontend_ports
-      ssl_certificate_name = "vault.nonprod.verituityplatform.com" # name of the acme certificate in keyvault, defined in var.ssl_certificates
+      host_names           = ["vault.nonprod.diehlabsplatform.com"]
+      frontend_port_name   = "vault"                              # from var.frontend_ports
+      ssl_certificate_name = "vault.nonprod.diehlabsplatform.com" # name of the acme certificate in keyvault, defined in var.ssl_certificates
     }
 
     frontend = {
